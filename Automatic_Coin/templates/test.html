@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>5조 가상화폐추천 서비스 홈페이지</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+        }
+        button {
+            background-color: #007BFF;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-flex;
+            font-size: 16px;
+            margin: 10px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .big-button {
+            background-color: #f43e68;
+            font-size: 24px;
+            padding: 20px 40px;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ message }}</h1>
+    <button class="big-button" onclick="location.href='/data'">데이터 페이지로 이동하기</button>
+    <div class="button-container">
+        {% for coin_data in all_data %}
+        <button onclick="location.href='/graph/{{coin_data.coin_name}}'">{{coin_data.coin_name}} 그래프 보기</button>
+        <button onclick="location.href='/graph/KRW_AXS'">AXS 그래프 보기</button>
+        <button onclick="location.href='/graph/KRW_BTC'">BTC 그래프 보기</button>
+        <button onclick="location.href='/graph/KRW_DOGE'">DOGE 그래프 보기</button>
+        <button onclick="location.href='/graph/KRW_ETH'">ETH 그래프 보기</button>
+        <button onclick="location.href='/graph/KRW_IQ'">IQ 그래프 보기</button>
+        <button onclick="location.href='/graph/KRW_KAVA'">KAVA 그래프 보기</button>
+        <button onclick="location.href='/graph/KRW_MASK'">MASK 그래프 보기</button>
+        <button onclick="location.href='/graph/KRW_MTL'">MTL 그래프 보기</button>
+        <button onclick="location.href='/graph/KRW_NEO'">NEO 그래프 보기</button>
+        <button onclick="location.href='/graph/KRW_QKC'">QKC 그래프 보기</button>
+        <button onclick="location.href='/graph/KRW_SAND'">SAND 그래프 보기</button>
+        <button onclick="location.href='/graph/KRW_STX'">STX 그래프 보기</button>
+        <button onclick="location.href='/graph/KRW_SXP'">SXP 그래프 보기</button>
+        <button onclick="location.href='/graph/KRW_TRX'">TRX 그래프 보기</button>
+        <button onclick="location.href='/graph/KRW_XRP'">XRP 그래프 보기</button>
+    </div>    
+</body>
+</html>

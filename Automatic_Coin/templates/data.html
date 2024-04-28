@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>데이터 출력</title>
+  <style>
+    button {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    table {
+      display: none;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.25rem 0.5rem;
+      text-align: center;
+    }
+  </style>
+  <script>
+    function toggleTable(coin_name) {
+      var table = document.getElementById('table-' + coin_name);
+      table.style.display = table.style.display === 'none' ? 'table' : 'none';
+    }
+  </script>
+</head>
+<body>
+  {% for coin_data in all_data %}
+    <button onclick="toggleTable('{{ coin_data.coin_name }}')"> {{ coin_data.coin_name }} 데이터</button>
+    <table id="table-{{coin_data.coin_name}}">
+      <thead>
+        <tr>
+          <th>이름</th>
+          <th>가격</th>
+          <th>거래량</th>
+          <th>타임스탬프</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in coin_data.data %}
+          <tr>
+            <td>{{ row.name }}</td>
+            <td>{{ row.price }}</td>
+            <td>{{ row.volume }}</td>
+            <td>{{ row.timestamp }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endfor %}
+</body>
+</html>

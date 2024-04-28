@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ coin_name }} 그래프</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>{{ coin_name }} 그래프</h1>
+    <canvas id="coinChart"></canvas>
+    <script>
+        const coinName = "{{ coin_name.replace('_', '-') }}";
+const coinDataUrl = "/get_data_json?coinName=" + encodeURIComponent(coinName);
+        fetch(coinDataUrl)
+            .then(response => response.json())
+            .then(data => {
+                const coinData = data.find(d => d.coin_name.replace('_', '-') === coinName).data;
+                const recentData = coinData.slice(-1000); // 최근 1000개의 데이터 선택
+                const ctx = document.getElementById('coinChart').getContext('2d');
+
+                // 데이터 배열
+                const priceData = recentData.map(d => d.price);
+                const volumeData = recentData.map(d => d.volume);
+                const labels = recentData.map(d => d.timestamp);
+
+                // 차트 생성
+                const chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Price',
+                                data: priceData,
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 2,
+                                yAxisID: 'y1',
+                            }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            x: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Timestamp'
+                                },
+                                ticks: {
+                                    callback: function (value, index, values) {
+                                        // 해당 인덱스에 대응하는 데이터의 timestamp 값을 가져온다.
+                                        const timestamp = labels[index];
+
+                                        // 시간 정보를 파싱하고 Date 객체를 생성한다.
+                                        const time = new Date(timestamp);
+
+                                        if (time.getSeconds() >= 0 && time.getSeconds() <= 3) {
+                                            if (time.getMinutes() % 30 === 0 && time.getSeconds() <= 3) {
+                                                // 현재 레이블의 분이 15분, 30분, 45분, 00분이고 초가 3이하일 때만 레이블을 표시한다.
+                                                const hours = time.getHours().toString().padStart(2, '0');
+                                                const minutes = time.getMinutes().toString().padStart(2, '0');
+                                                return `${hours}:${minutes}`;
+                                            }
+                                        }
+
+                                        return null;
+                                    }
+                                }
+                            },
+                            y1: {
+                                type: 'linear',
+                                position: 'left',
+                                min: Math.min(...priceData) * 0.99,
+                                max: Math.max(...priceData) * 1.01,
+                            }
+                        }
+                    }
+                });
+            });
+    </script>
+</body>
+</html>

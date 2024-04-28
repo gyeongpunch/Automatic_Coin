@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>5조 가상화폐추천 서비스 홈페이지</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+        }
+        button {
+            background-color: #007BFF;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-flex;
+            font-size: 16px;
+            margin: 10px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .big-button {
+            background-color: #f43e68;
+            font-size: 24px;
+            padding: 20px 40px;
+        }
+        .red-button {
+            background-color: #f43e68;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .coin-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        list-style: none;
+        padding: 0;
+        width: 100%;
+        max-width: 750px;
+        margin: 20px auto 0;
+        gap: 10px;
+        }
+        .coin-item {
+            width: calc(33% - 20px);
+            text-align: center;
+        }
+        .center-content {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="center-content">
+        <h1>{{ message }}</h1>
+    </div>
+    <div class="center-content">
+        <button class="big-button" onclick="location.href='/data'">데이터 페이지로 이동하기</button>
+    </div>
+        <ul class="coin-list">
+        {% for coin_name in coin_names %}
+        <li class="coin-item">
+            <button {% if coin_name in strategy_meet_coin_names %}class="red-button"{% else %}class="button"{% endif %} onclick="location.href='{{ url_for('graph_coin', coin_name=coin_name) }}'">{{ coin_name }}</button>
+        </li>
+        {% endfor %}            
+    </ul>  
+</body>
+</html>
